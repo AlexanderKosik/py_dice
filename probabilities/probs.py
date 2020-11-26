@@ -1,4 +1,5 @@
 from collections import Counter as Counter
+import math
 
 AVG_SCORE = 3.5
 SCORE_KNIFFEL = 50
@@ -49,12 +50,18 @@ def gr_strasse(first_roll):
     c = Counter((int(x) for x in first_roll))
     num_unique = len(c.most_common())
     needed = NUMBER_OF_DICES - num_unique
-    probability = 1 if needed <= 0 else pow(1 / 6, needed) * 2 * (NUMBER_OF_DICES - num_unique)
+    # das hier gilt nur bei einem wurf, wir haben aber noch 2
+    probability = 1 if needed <= 0 else math.factorial(needed)/6**needed
     return probability, SCORE_GR_STRASSE
 
+# fix this
 def full_house(first_roll):
     c = Counter((int(x) for x in first_roll))
     num_unique = len(c.most_common())
+    if num_unique == 1: # we have a kniffel
+        pass  
+    if num_unique >= 3:
+        num_unique 
     needed = 6 - num_unique
     probability = 1 if needed <= 0 else pow(1 / 6, needed) * 2 * (NUMBER_OF_DICES - num_unique)
     return probability, SCORE_GR_STRASSE
